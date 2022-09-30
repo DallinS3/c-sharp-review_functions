@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 // Tic Tac Toe
@@ -155,7 +155,7 @@ This is the game Tic-Tac-Toe!
             return msg;
         }
 
-        static bool notFilled(string user_input)
+                static bool notFilled(string user_input)
         {
             bool openSpace = true;
             // specify that the space the user is selecting is not taken

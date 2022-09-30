@@ -1,0 +1,9 @@
+Game Start
+
+    Important Functions:
+        - Draw Board
+        - Player Turn
+        - Check Board
+        - Check Squares
+
+Game Over
