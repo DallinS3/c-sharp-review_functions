@@ -27,7 +27,7 @@ This is the game Tic-Tac-Toe!
 
                     DrawBoard(board);
 
-                    int choice = MoveChoice(currentPlayer);
+                    int choice = MoveChoice(board, currentPlayer);
                     board[choice - 1] = currentPlayer;
                 }
             }
@@ -56,8 +56,9 @@ This is the game Tic-Tac-Toe!
         static bool GameOver(List<string> board, string currentPlayer)
         {
             string message = TheWinner(board, currentPlayer);
-            if (message == currentPlayer || message == "This is a Cat Game! Try again") 
+            if (message == $"{currentPlayer} has won!!" || message == "This is a Cat Game! Nice game") 
             {
+                DrawBoard(board);
                 Console.WriteLine(message);
                 return true;
             }
@@ -76,29 +77,32 @@ This is the game Tic-Tac-Toe!
             return nextPlayer;
         }
 
-        static int MoveChoice(string currentPlayer)
+        static int MoveChoice(List<string> board, string currentPlayer)
         {
             Console.Write($"{currentPlayer}'s turn to choose a square (1-9): ");
-            string change_string = Console.ReadLine() ?? "5";
+            int change_string = Convert.ToInt32(Console.ReadLine() ?? "5");
 
-            bool availableSpace = notFilled(change_string);
-
-            int choice = 0;
-
-            choice = Convert.ToInt32(change_string);
-            
-            return choice;
+            bool availableSpace = notFilled(board, change_string);
+            if (!availableSpace)
+            {
+                Console.WriteLine("Oops! This is not an available space. Try again");
+                return MoveChoice(board, currentPlayer);
+            }
+            else
+            {
+                return Convert.ToInt32(change_string);
+            }
         }
 
         static string TheWinner(List<string> board, string currentPlayer)
         {
-            string CatGameMessage = "This is a Cat Game! Try again";
+            string CatGameMessage = "This is a Cat Game! Nice game";
             string WinGameMessage = $"{currentPlayer} has won!!";
             string msg = "";
             for (int i = 1; i < 4; i++)
             {
                 int c = 0;
-                for (int j = i; i < 10; j += 3)
+                for (int j = i; j < 10; j += 3)
                 {
                     if ((board[j - 1]) != currentPlayer)
                     {
@@ -155,15 +159,16 @@ This is the game Tic-Tac-Toe!
             return msg;
         }
 
-        static bool notFilled(string user_input)
+        static bool notFilled(List<string> board, int user_input)
         {
             bool openSpace = true;
             // specify that the space the user is selecting is not taken
-            if (user_input = "X")
+            // Console.WriteLine(board[user_input - 1]);
+            if (board[user_input - 1] == "X")
             {
                 openSpace = false;
             }
-            else if (user_input = "O")
+            else if (board[user_input - 1] == "O")
             {
                 openSpace = false;
             }
